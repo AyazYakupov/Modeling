@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
+<body class="container col-lg-10 mt-4">
+<div class="mytable col-lg-4 float-left">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Вес</th>
+        </tr>
+        </thead>
+        <tbody id="data">
+        {% if table %}
+            {% for row in table %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td><input type="number" min="1" max="100" step="1" value="{{ row[2] }}"></td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+<div class="inputs col-lg-8 float-right">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Количество точек</span>
+        </div>
+        <input type="number" min="1" max="100" step="1" id="points" value="{{ size }}" placeholder="Введите количество"
+               class="w-50">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="create_table">Создать таблицу</button>
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Степень полинома</span>
+        </div>
+        <input type="number" min="0" max="100" step="1" id="degree" value="{{ degree }}" placeholder="Введите степень"
+               class="w-50">
+        <button class="btn btn-outline-secondary" type="button" id="show_plot">Показать график</button>
+    </div>
+    <img src="#" id="plot_image" alt="my plot" class="d-none" style="width: 800px; height: 600px;">
+</div>
+<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='lab_2/js/lab_2.js') }}"></script>
+</body>
+</html>

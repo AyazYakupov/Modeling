@@ -1,18 +1,22 @@
+from app import session
 import matplotlib.pyplot as plt
 import numpy as np
-from flask import render_template, session, jsonify, request
+from flask import request, jsonify, Blueprint, render_template
 
-from app import app
+lab_2 = Blueprint('lab_2', __name__,
+                  template_folder='templates',
+                  static_folder='static',
+                  static_url_path='/lab_2/static')
 
 
-@app.route('/lab_2', methods=['GET', 'POST'])
+@lab_2.route('/', methods=['GET', 'POST'])
 def myapp():
     degree = session.get('degree')
     size = session.get('size')
-    return render_template('new.html', table=session.get('table'), degree=degree, size=size)
+    return render_template('new.html', table=session.get('table'), degree=degree, size=size, current_lab='Lab 2')
 
 
-@app.route('/create_table', methods=['GET', 'POST'])
+@lab_2.route('/create_table', methods=['GET', 'POST'])
 def create_table():
     size = int(request.form.get('points'))
 
@@ -26,7 +30,7 @@ def create_table():
     return jsonify(result='Okey')
 
 
-@app.route('/polyfit', methods=['GET', 'POST'])
+@lab_2.route('/polyfit', methods=['GET', 'POST'])
 def polyfit():
     polynom_degree = int(request.form.get('degree'))
 
@@ -51,10 +55,10 @@ def polyfit():
     plt.ylabel('Y')
     plt.grid()
 
-    plt.savefig('static/lab_3/images/plot.png')
+    plt.savefig('static/lab_2/images/plot.png')
     plt.close()
 
     session['degree'] = polynom_degree
-    session['url'] = 'static/lab_3/images/plot.png'
+    session['url'] = 'images/plot.png'
 
     return jsonify(result=session['url'])

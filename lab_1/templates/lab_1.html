@@ -1,0 +1,54 @@
+{% extends "index.html" %}
+{% block content %}
+    <div class="container col-md-5 float-left">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in array %}
+                <tr>
+                    <td>{{ i[0] }}</td>
+                    <td>{{ i[1] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container col-md-5 float-left">
+        <form method="post">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Задайте X</span>
+                    </div>
+                    <input type="number" step="0.001" class="form-control" min="-100000" max="100000"
+                           value="{{ x | safe }}" name="X" id="X" aria-describedby="basic-addon3" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Задайте степень полинома</span>
+                    </div>
+                    <input type="number" min="0" max="5" class="form-control" value="{{ n | safe }}" name="N" id="N"
+                           aria-describedby="basic-addon3" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Посчитать</button>
+            <button type="button" class="btn btn-success" id="reverse">Посчитать корень функции</button>
+        </form>
+        <br>
+        <div>
+            {% if y or y == 0.0 %}
+                <p>Y: {{ y }}</p>
+                <br>
+                <p>Результат интерполяции: {{ result }}</p>
+            {% endif %}
+        </div>
+        <div class="reverse">
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='lab_1/js/lab_1.js') }}"></script>
+{% endblock %}

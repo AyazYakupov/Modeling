@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lab3</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
-</head>
-<body class="container col-lg-10 mt-4">
+{% extends "index.html" %}
+{% block content %}
 <div class="mytable col-lg-4 float-left">
     <img src="{{ url_for('static', filename="lab_3/images/laplace2.png", _external=True) }}" class="img-fluid"
          alt="Responsive image">
@@ -33,9 +26,5 @@
     <p id="answer"></p>
 </div>
 <div class="loader d-none" id="loader"></div>
-<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lab_3/js/lab_3.js') }}"></script>
-</body>
-</html>
+{% endblock %}

@@ -1,8 +1,8 @@
-from flask import render_template, session, jsonify, request
-from .test import get_x
-
 from flask import Blueprint, render_template, abort
+from flask import jsonify, request
 from jinja2 import TemplateNotFound
+
+from .test import get_x
 
 lab_3 = Blueprint('lab_3', __name__,
                   template_folder='templates',
@@ -13,7 +13,7 @@ lab_3 = Blueprint('lab_3', __name__,
 @lab_3.route('/', methods=['GET', 'POST'])
 def gauss_integration():
     try:
-        return render_template('lab3.html')
+        return render_template('lab3.html', current_lab='Lab 3')
     except TemplateNotFound:
         abort(404)
 

@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-</head>
-<body class="container col-lg-10 mt-4">
+{% extends "index.html" %}
+{% block content %}
 <div class="mytable col-lg-4 float-left">
     <table class="table table-bordered">
         <thead>
@@ -49,11 +43,8 @@
                class="w-50">
         <button class="btn btn-outline-secondary" type="button" id="show_plot">Показать график</button>
     </div>
-    <img src="#" id="plot_image" alt="my plot" class="d-none" style="width: 800px; height: 600px;">
+    <img src="{{ url_for('static', filename='lab_2/images/plot.png') }}" id="plot_image" alt="my plot" class="d-none" style="width: 800px; height: 600px;">
+
 </div>
-<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='lab_2/js/lab_2.js') }}"></script>
-</body>
-</html>
+{% endblock %}

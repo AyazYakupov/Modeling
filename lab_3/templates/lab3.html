@@ -16,7 +16,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Ф(x)</span>
             </div>
-            <input type="number" min="0.001" step="0.00001" id="points"
+            <input type="number" min="0.000001" max="5" step="0.000001" id="points"
                    placeholder="Введите значение функции" name="func"
                    class="w-50" required>
         </div>
@@ -26,5 +26,4 @@
     <p id="answer"></p>
 </div>
 <div class="loader d-none" id="loader"></div>
-<script src="{{ url_for('static', filename='lab_3/js/lab_3.js') }}"></script>
 {% endblock %}

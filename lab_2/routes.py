@@ -39,15 +39,15 @@ def polyfit():
 
     w = [int(i) for i in request.form.get('weight').strip().split()]
 
-    # A = np.vstack([x, np.ones(len(x))]).T
+    x_array, y_array, w_array = get_polynom_array(x, y, w)
 
-    # аппроксимация многочленом 2 степени по МНК
     p = np.polyfit(x, y, polynom_degree, w=w)  # вычисление коэффициентов многочлена
-    yp = np.polyval(p, x)  # вычисление значений многочлена
+    yp = np.polyval(p, x_array)  # вычисление значений многочлена
 
     plt.plot(x, y, 'ro', label=u'Function')
-    plt.plot(x, yp, 'r', label='Approx')
-    std = np.sqrt((y - yp) ** 2)
+    plt.plot(x_array, yp, 'r', label='Approx')
+
+    std = np.sqrt((y - yp[::9]) ** 2)
     plt.errorbar(x, y, std, label=u'Std')
     plt.legend(loc='best')
     plt.title(u'Plots')
@@ -62,3 +62,14 @@ def polyfit():
     session['url'] = 'images/plot.png'
 
     return jsonify(result=session['url'])
+
+
+def get_polynom_array(x_array, y_array, w_array):
+    x_result_array = []
+    y_result_array = []
+    w_result_array = []
+    for i in range(len(x_array) - 1):
+        x_result_array.extend(np.linspace(x_array[i], x_array[i + 1], 10))
+        y_result_array.extend(np.linspace(y_array[i], y_array[i + 1], 10))
+        w_result_array.extend(np.linspace(w_array[i], w_array[i + 1], 10))
+    return x_result_array, y_result_array, w_result_array

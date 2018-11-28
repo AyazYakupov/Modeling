@@ -39,7 +39,10 @@ def polyfit():
 
     w = [int(i) for i in request.form.get('weight').strip().split()]
 
-    x_array, y_array, w_array = get_polynom_array(x, y, w)
+    x_array = []
+
+    for i in range(len(x) - 1):
+        x_array.extend(np.linspace(x[i], x[i + 1], 10))
 
     p = np.polyfit(x, y, polynom_degree, w=w)  # вычисление коэффициентов многочлена
     yp = np.polyval(p, x_array)  # вычисление значений многочлена
@@ -63,13 +66,3 @@ def polyfit():
 
     return jsonify(result=session['url'])
 
-
-def get_polynom_array(x_array, y_array, w_array):
-    x_result_array = []
-    y_result_array = []
-    w_result_array = []
-    for i in range(len(x_array) - 1):
-        x_result_array.extend(np.linspace(x_array[i], x_array[i + 1], 10))
-        y_result_array.extend(np.linspace(y_array[i], y_array[i + 1], 10))
-        w_result_array.extend(np.linspace(w_array[i], w_array[i + 1], 10))
-    return x_result_array, y_result_array, w_result_array

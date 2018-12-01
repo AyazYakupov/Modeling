@@ -1,0 +1,68 @@
+{% extends "index.html" %}
+{% block content %}
+    <div class="mytable col-lg-4 float-left">
+        <form method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">a0</span>
+                </div>
+                <input type="number"
+                       placeholder="Введите число" name="a0" value="{{ a0 | safe }}"
+                       class="w-50" required>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">a1</span>
+                </div>
+                <input type="number"
+                       placeholder="Введите число" name="a1" value="{{ a1 | safe }}"
+                       class="w-50" required>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">a2</span>
+                </div>
+                <input type="number"
+                       placeholder="Введите число" name="a2" value="{{ a2 | safe }}"
+                       class="w-50" required>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">P для формулы Рунге</span>
+                </div>
+                <input type="number" min="0.1" max="10" step="0.1"
+                       placeholder="Введите значение функции" name="p" value="{{ p | safe }}"
+                       class="w-50" required>
+            </div>
+            <button class="btn btn-success" type="submit">Вычислить X</button>
+        </form>
+    {% for table in tables %}
+        <h2>{{ table['h2'] }}</h2>
+        <table class="table table-bordered">
+            {% if table.get('data') %}
+                <thead>
+                <th>x</th>
+                <th>y</th>
+                <th>y' -> O(h)</th>
+                <th>y' -> O(h^2)</th>
+                <th>y'' -> O(h^2)</th>
+                <th>y0' -> O(h^2)</th>
+                <th>yn' -> O(h^2)</th>
+                <th>y' -> по формуле Рунге</th>
+                <th>y' -> с выравниванием переменных</th>
+                </thead>
+                <tbody>
+                {% for row in table.get('data') %}
+                    <tr>
+                    {% for column in row %}
+                        <td>{{ column }}</td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            {% endif %}
+        </table>
+    {% endfor %}
+
+        <div class="loader d-none" id="loader"></div>
+{% endblock %}

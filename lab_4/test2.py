@@ -21,7 +21,7 @@ def column_3(arr_x, arr_y):
 
 
 def column_4(arr_x, arr_y):
-    return [round((arr_y[i + 1] - arr_y[i] - 1) / (2 * (arr_x[i + 1] - arr_x[i])), 3) for i in range(1, len(arr_x) - 1)]
+    return [round((arr_y[i + 1] - arr_y[i - 1]) / (2 * (arr_x[i + 1] - arr_x[i])), 3) for i in range(1, len(arr_x) - 1)]
 
 
 def column_5(arr_x, arr_y):
@@ -50,12 +50,14 @@ def Runge_formuls(func, y_arr_diff, int_p):  # int_p = input
 def var_alignment(arr_x, arr_y_1, arr_y_2):
     xz = [1 / i for i in arr_x]
     y1z = [np.log(i) for i in arr_y_1]
+    # y1z = [1 / i for i in arr_y_1]
     y2z = [1 / i for i in arr_y_2]
 
     y1z_diff = column_3(xz, y1z)
     y2z_diff = column_3(xz, y2z)
 
     y1z_diff_reversed = [round(y1z_diff[i] * arr_y_1[i], 3) for i in range(len(y1z_diff))]
+    # y1z_diff_reversed = [round(y1z_diff[i] * y1z[i], 3) for i in range(len(y1z_diff))]
     y2z_diff_reversed = [round(y2z_diff[i] * (arr_y_2[i] ** 2) / (arr_x[i] ** 2), 3) for i in range(len(y2z_diff))]
 
     return y1z_diff_reversed, y2z_diff_reversed
@@ -65,8 +67,8 @@ def get_df(x_array, func, p):
     df = pd.DataFrame({'x': x_array})
     df['y'] = np.round(func(df['x']), 3)
     df["y'"] = [''] + column_3(df['x'].__array__(), df['y'].__array__())
-    df["y2'"] = ['', ''] + column_4(df['x'].__array__(), df['y'].__array__())
-    df["y''"] = ['', ''] + column_5(df['x'].__array__(), df['y'].__array__())
+    df["y2'"] = [''] + column_4(df['x'].__array__(), df['y'].__array__()) + ['']
+    df["y''"] = [''] + column_5(df['x'].__array__(), df['y'].__array__()) + ['']
     df["y0'"] = [column_6(df['y'].__array__())] + ['' for i in range(9)]
     df["yn'"] = ['' for i in range(9)] + [column_7(df['y'].__array__())]
     df['Runge formuls'] = Runge_formuls(func, df["y'"].__array__()[1:], p) + ['']
@@ -78,7 +80,7 @@ def main(p, a0, a1, a2):
     df2 = get_df(x_array, func_2(a0, a1, a2), p)
     df1['var alignment'], df2['var alignment'] = [i + [''] for i in var_alignment(x_array, df1['y'].__array__(),
                                                                                   df2['y'].__array__())]
-    return df1.__array__(), np.round(df1, 3).__array__()
+    return df1.__array__(), df2.__array__()
 
 
 if __name__ == '__main__':

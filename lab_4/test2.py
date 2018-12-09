@@ -25,7 +25,8 @@ def column_4(arr_x, arr_y):
 
 
 def column_5(arr_x, arr_y):
-    return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / (arr_x[i + 1] - arr_x[i]), 3) for i in
+    return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / ((arr_x[i + 1] - arr_x[i])**2), 3) for i in
+    # return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / (arr_x[i + 1] - arr_x[i]), 3) for i in
             range(1, len(arr_x) - 1)]
 
 
@@ -53,7 +54,8 @@ def var_alignment(arr_x, arr_y_1, arr_y_2):
     # y1z = [1 / i for i in arr_y_1]
     y2z = [1 / i for i in arr_y_2]
 
-    y1z_diff = column_3(xz, y1z)
+    # print(y1z)
+    y1z_diff = column_3(arr_x, y1z)
     y2z_diff = column_3(xz, y2z)
 
     y1z_diff_reversed = [round(y1z_diff[i] * arr_y_1[i], 3) for i in range(len(y1z_diff))]
@@ -71,7 +73,8 @@ def get_df(x_array, func, p):
     df["y''"] = [''] + column_5(df['x'].__array__(), df['y'].__array__()) + ['']
     df["y0'"] = [column_6(df['y'].__array__())] + ['' for i in range(9)]
     df["yn'"] = ['' for i in range(9)] + [column_7(df['y'].__array__())]
-    df['Runge formuls'] = Runge_formuls(func, df["y'"].__array__()[1:], p) + ['']
+    # df['Runge formuls'] = Runge_formuls(func, df["y'"].__array__()[1:], p) + ['']
+    df['Runge formuls'] = [''] + Runge_formuls(func, df["y'"].__array__()[1:], p)
     return df
 
 

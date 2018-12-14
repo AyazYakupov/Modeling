@@ -25,8 +25,8 @@ def column_4(arr_x, arr_y):
 
 
 def column_5(arr_x, arr_y):
-    return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / ((arr_x[i + 1] - arr_x[i])**2), 3) for i in
-    # return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / (arr_x[i + 1] - arr_x[i]), 3) for i in
+    return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / ((arr_x[i + 1] - arr_x[i]) ** 2), 3) for i in
+            # return [round((arr_y[i + 1] - 2 * arr_y[i] + arr_y[i - 1]) / (arr_x[i + 1] - arr_x[i]), 3) for i in
             range(1, len(arr_x) - 1)]
 
 
@@ -38,13 +38,15 @@ def column_7(arr_y):
     return round((-4 * arr_y[8] + 3 * arr_y[9] + arr_y[7]) / 2, 3)
 
 
-def Runge_formuls(func, y_arr_diff, int_p):  # int_p = input
-    xr_arr = np.linspace(1, 10.5, 20)
-    yr_arr = [func(i) for i in xr_arr]
+def Runge_formuls(yr_arr, y_arr_diff, int_p):  # int_p = input
+    # xr_arr = np.linspace(1, 10.5, 20)
+    # yr_arr = [func(i) for i in xr_arr]
+    # first_formul = [round((arr_y[i + 1] - arr_y[i]) / (arr_x[i + 1] - arr_x[i]), 3) for i in range(len(arr_x) - 1)]
 
-    first_formul = [(yr_arr[i + 1] - yr_arr[i]) / 0.5 for i in range(0, len(yr_arr) - 1, 2)]
-    second_formul = [round(y_arr_diff[i] + (y_arr_diff[i] - first_formul[i]) / ((0.5 ** int_p) - 1), 3) for i in
-                     range(len(y_arr_diff))]
+    first_formul = [(yr_arr[i + 2] - yr_arr[i]) / 2 for i in range(0, len(yr_arr) - 2)]
+    print(len(first_formul), len(y_arr_diff))
+    second_formul = [round(y_arr_diff[i] + (y_arr_diff[i] - first_formul[i - 1]) / ((2 ** int_p) - 1), 3) for i in
+                     range(1, len(y_arr_diff))]
     return second_formul
 
 
@@ -74,7 +76,7 @@ def get_df(x_array, func, p):
     df["y0'"] = [column_6(df['y'].__array__())] + ['' for i in range(9)]
     df["yn'"] = ['' for i in range(9)] + [column_7(df['y'].__array__())]
     # df['Runge formuls'] = Runge_formuls(func, df["y'"].__array__()[1:], p) + ['']
-    df['Runge formuls'] = [''] + Runge_formuls(func, df["y'"].__array__()[1:], p)
+    df['Runge formuls'] = ['', ''] + Runge_formuls(df['y'], df["y'"].__array__()[1:], p)
     return df
 
 
